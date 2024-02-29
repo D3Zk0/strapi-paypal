@@ -59,22 +59,14 @@
       "eslint --fix"
     ]
   },
-  "author": {
-    "name": "AsyncWeb Technology",
-    "email": "support@asyncweb.io",
-    "url": "https://higheredlab.com/"
-  },
+  "author": "AsyncWeb Technology <support@asyncweb.io> (https://higheredlab.com/)",
   "homepage": "https://github.com/AsyncWeb/strapi-paypal#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AsyncWeb/strapi-paypal.git"
+    "url": "git+https://github.com/AsyncWeb/strapi-paypal.git"
   },
   "maintainers": [
-    {
-      "name": "AsyncWeb Technology",
-      "email": "support@asyncweb.io",
-      "url": "https://higheredlab.com/"
-    }
+    "AsyncWeb Technology <support@asyncweb.io> (https://higheredlab.com/)"
   ],
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
@@ -110,5 +102,9 @@
     "subscribe",
     "gateway"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AsyncWeb/strapi-paypal/issues"
+  },
+  "main": ".eslintrc.back.js"
 }
