@@ -1,5 +1,5 @@
 {
-  "name": "strapi-paypal",
+  "name": "@d3x99/strapi-paypal",
   "version": "2.0.0",
   "description": "Online payments and subscriptions made simple, secure and fast.This free plugin enables you to accept online payments and create subscriptions using Paypal account or Credit/Debit card on your Strapi app via Paypal.",
   "strapi": {
