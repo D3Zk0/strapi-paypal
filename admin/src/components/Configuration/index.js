@@ -23,8 +23,8 @@ import {
   Alert,
   Switch,
   Flex,
-  SingleSelect,
-  SingleSelectOption,
+  Select,
+  Option,
 } from '@strapi/design-system';
 
 import currencies from './constant';
@@ -50,13 +50,14 @@ const Configuration = () => {
     currency: '',
   });
 
+
   useEffect(() => {
     (async () => {
       const response = await getPaypalConfiguration(apiToken);
 
       if (response.data?.response) {
         const { isLiveMode, checkoutSuccessUrl, checkoutCancelUrl, currency, callbackUrl } =
-          response.data.response;
+            response.data.response;
         setPaypalConfiguration({
           ...paypalConfiguration,
           isLiveMode,
@@ -74,6 +75,7 @@ const Configuration = () => {
     setError({ ...error, currency: '' });
   };
 
+
   const handleChange = event => {
     const { name, value } = event.target;
     setPaypalConfiguration({ ...paypalConfiguration, [name]: value });
@@ -85,13 +87,14 @@ const Configuration = () => {
     }
   };
 
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
     if (
-      !paypalConfiguration.checkoutSuccessUrl &&
-      !paypalConfiguration.checkoutCancelUrl &&
-      !paypalConfiguration.currency
+        !paypalConfiguration.checkoutSuccessUrl &&
+        !paypalConfiguration.checkoutCancelUrl &&
+        !paypalConfiguration.currency
     ) {
       setError({
         ...error,
@@ -128,173 +131,174 @@ const Configuration = () => {
     }
   };
 
+
   return (
-    <Main>
-      <SettingsPageTitle name="Paypal" />
-      <HeaderLayout
-        title="Paypal Configuration"
-        primaryAction={
-          <Button
-            type="submit"
-            loading={isSubmitting}
-            onClick={handleSubmit}
-            startIcon={<Check />}
-            size="L"
-          >
-            Save
-          </Button>
-        }
-      />
+      <Main>
+        <SettingsPageTitle name="Paypal" />
+        <HeaderLayout
+            title="Paypal Configuration"
+            primaryAction={
+              <Button
+                  type="submit"
+                  loading={isSubmitting}
+                  onClick={handleSubmit}
+                  startIcon={<Check />}
+                  size="L"
+              >
+                Save
+              </Button>
+            }
+        />
 
-      <ContentLayout>
-        <Box paddingBottom={2}>
-          {showAlert ? (
-            <Alert
-              closeLabel="Close alert"
-              title="Stripe configuration"
-              variant="success"
-              onClose={() => {
-                setShowAlert(false);
-              }}
-            >
-              saved successfully.
-            </Alert>
-          ) : (
-            ''
-          )}
-        </Box>
-
-        <Box
-          shadow="tableShadow"
-          background="neutral0"
-          paddingTop={6}
-          paddingLeft={7}
-          paddingRight={7}
-          paddingBottom={6}
-          hasRadius
-        >
+        <ContentLayout>
           <Box paddingBottom={2}>
-            <Typography variant="delta">Global Setting</Typography>
+            {showAlert ? (
+                <Alert
+                    closeLabel="Close alert"
+                    title="Stripe configuration"
+                    variant="success"
+                    onClose={() => {
+                      setShowAlert(false);
+                    }}
+                >
+                  saved successfully.
+                </Alert>
+            ) : (
+                ''
+            )}
           </Box>
 
-          <Box paddingTop={2}>
-            <Grid gap={4}>
-              <GridItem col={12} s={12}>
-                <Box paddingTop={3}>
-                  <Flex alignItems="center">
-                    <Box paddingRight={4}>
-                      <Typography variant="delta">Live Mode</Typography>
-                    </Box>
+          <Box
+              shadow="tableShadow"
+              background="neutral0"
+              paddingTop={6}
+              paddingLeft={7}
+              paddingRight={7}
+              paddingBottom={6}
+              hasRadius
+          >
+            <Box paddingBottom={2}>
+              <Typography variant="delta">Global Setting</Typography>
+            </Box>
 
-                    <Switch
-                      label="Live Mode"
-                      visibleLabels
-                      offLabel="Paypal is in sandbox mode"
-                      onLabel="Paypal is ready to accept payment"
-                      selected={paypalConfiguration.isLiveMode}
-                      onChange={() => {
-                        setPaypalConfiguration({
-                          ...paypalConfiguration,
-                          isLiveMode: !paypalConfiguration.isLiveMode,
-                        });
-                      }}
+            <Box paddingTop={2}>
+              <Grid gap={4}>
+                <GridItem col={12} s={12}>
+                  <Box paddingTop={3}>
+                    <Flex alignItems="center">
+                      <Box paddingRight={4}>
+                        <Typography variant="delta">Live Mode</Typography>
+                      </Box>
+
+                      <Switch
+                          label="Live Mode"
+                          visibleLabels
+                          offLabel="Paypal is in sandbox mode"
+                          onLabel="Paypal is ready to accept payment"
+                          selected={paypalConfiguration.isLiveMode}
+                          onChange={() => {
+                            setPaypalConfiguration({
+                              ...paypalConfiguration,
+                              isLiveMode: !paypalConfiguration.isLiveMode,
+                            });
+                          }}
+                      />
+                    </Flex>
+                  </Box>
+                </GridItem>
+              </Grid>
+            </Box>
+
+            <Box paddingTop={2}>
+              <Grid gap={4}>
+                <GridItem col={6} s={12}>
+                  <Box paddingTop={2} paddingBottom={2}>
+                    <TextInput
+                        name="checkoutSuccessUrl"
+                        label="Payment Success Page URL"
+                        required
+                        value={paypalConfiguration.checkoutSuccessUrl}
+                        error={error.checkoutSuccessUrl ? error.checkoutSuccessUrl : ''}
+                        onChange={handleChange}
+                        hint="Redirects to the success page after the  payment successful"
                     />
-                  </Flex>
-                </Box>
-              </GridItem>
-            </Grid>
+                  </Box>
+                </GridItem>
+                <GridItem col={6} s={12}>
+                  <Box paddingTop={2} paddingBottom={2}>
+                    <TextInput
+                        name="checkoutCancelUrl"
+                        label="Payment Cancel Page URL"
+                        required
+                        value={paypalConfiguration.checkoutCancelUrl}
+                        error={error.checkoutCancelUrl ? error.checkoutCancelUrl : ''}
+                        onChange={handleChange}
+                        hint="Redirects to the cancel page after the  payment failed"
+                    />
+                  </Box>
+                </GridItem>
+                <GridItem col={6} s={12}>
+                  <Box paddingBottom={2}>
+                    <Select
+                        id="select1"
+                        label="Choose Currency"
+                        required
+                        placeholder="Choose Currency"
+                        clearLabel="Clear the Currency"
+                        error={error.currency ? error.currency : ''}
+                        onClear={() =>
+                            setPaypalConfiguration({
+                              ...paypalConfiguration,
+                              currency: undefined,
+                            })
+                        }
+                        onChange={value => handleChangeCurrency(value)}
+                        value={paypalConfiguration.currency}
+                    >
+                      {currencies &&
+                          currencies.map((currency, idx) => (
+                              <Option value={currency.value} key={idx}>
+                                {currency.label}
+                              </Option>
+                          ))}
+                    </Select>
+                  </Box>
+                </GridItem>
+                <GridItem col={6} s={12}>
+                  <Box paddingBottom={2}>
+                    <TextInput
+                        name="callbackUrl"
+                        label="Webhook URL"
+                        value={paypalConfiguration.callbackUrl}
+                        onChange={handleChange}
+                        hint="The response from Paypal will be posted to this URL."
+                    />
+                  </Box>
+                </GridItem>
+              </Grid>
+            </Box>
           </Box>
+          <br />
 
-          <Box paddingTop={2}>
-            <Grid gap={4}>
-              <GridItem col={6} s={12}>
-                <Box paddingTop={2} paddingBottom={2}>
-                  <TextInput
-                    name="checkoutSuccessUrl"
-                    label="Payment Success Page URL"
-                    required
-                    value={paypalConfiguration.checkoutSuccessUrl}
-                    error={error.checkoutSuccessUrl ? error.checkoutSuccessUrl : ''}
-                    onChange={handleChange}
-                    hint="Redirects to the success page after the  payment successful"
-                  />
-                </Box>
-              </GridItem>
-              <GridItem col={6} s={12}>
-                <Box paddingTop={2} paddingBottom={2}>
-                  <TextInput
-                    name="checkoutCancelUrl"
-                    label="Payment Cancel Page URL"
-                    required
-                    value={paypalConfiguration.checkoutCancelUrl}
-                    error={error.checkoutCancelUrl ? error.checkoutCancelUrl : ''}
-                    onChange={handleChange}
-                    hint="Redirects to the cancel page after the  payment failed"
-                  />
-                </Box>
-              </GridItem>
-              <GridItem col={6} s={12}>
-                <Box paddingBottom={2}>
-                  <SingleSelect
-                    id="select1"
-                    label="Choose Currency"
-                    required
-                    placeholder="Choose Currency"
-                    clearLabel="Clear the Currency"
-                    error={error.currency ? error.currency : ''}
-                    onClear={() =>
-                      setPaypalConfiguration({
-                        ...paypalConfiguration,
-                        currency: undefined,
-                      })
-                    }
-                    onChange={value => handleChangeCurrency(value)}
-                    value={paypalConfiguration.currency}
-                  >
-                    {currencies &&
-                      currencies.map((currency, idx) => (
-                        <SingleSelectOption value={currency.value} key={idx}>
-                          {currency.label}
-                        </SingleSelectOption>
-                      ))}
-                  </SingleSelect>
-                </Box>
-              </GridItem>
-              <GridItem col={6} s={12}>
-                <Box paddingBottom={2}>
-                  <TextInput
-                    name="callbackUrl"
-                    label="Webhook URL"
-                    value={paypalConfiguration.callbackUrl}
-                    onChange={handleChange}
-                    hint="The response from Paypal will be posted to this URL."
-                  />
-                </Box>
-              </GridItem>
-            </Grid>
+          <Box
+              shadow="tableShadow"
+              background="neutral0"
+              paddingTop={6}
+              paddingLeft={7}
+              paddingRight={7}
+              paddingBottom={6}
+              hasRadius
+          >
+            <Box paddingTop={2}>
+              <Grid gap={4}>
+                <GridItem col={6} s={12}>
+                  <Typography variant="pi">Need help? Contact us at : support@asyncweb.io</Typography>
+                </GridItem>
+              </Grid>
+            </Box>
           </Box>
-        </Box>
-        <br />
-
-        <Box
-          shadow="tableShadow"
-          background="neutral0"
-          paddingTop={6}
-          paddingLeft={7}
-          paddingRight={7}
-          paddingBottom={6}
-          hasRadius
-        >
-          <Box paddingTop={2}>
-            <Grid gap={4}>
-              <GridItem col={6} s={12}>
-                <Typography variant="pi">Need help? Contact us at : support@asyncweb.io</Typography>
-              </GridItem>
-            </Grid>
-          </Box>
-        </Box>
-      </ContentLayout>
-    </Main>
+        </ContentLayout>
+      </Main>
   );
 };
 
