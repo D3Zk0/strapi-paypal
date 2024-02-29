@@ -20,8 +20,8 @@ import {
   Flex,
   Typography,
   TextInput,
-  SingleSelect,
-  SingleSelectOption,
+  Select,
+  Option,
   NumberInput,
   Textarea,
 } from '@strapi/design-system';
@@ -206,7 +206,7 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
           <ModalBody>
             <Grid gap={5}>
               <GridItem col={6}>
-                <SingleSelect
+                <Select
                   id="select1"
                   label="Payment Type"
                   required
@@ -217,9 +217,9 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
                   onChange={value => handleChangePaymentType(value)}
                   value={paymentType}
                 >
-                  <SingleSelectOption value="oneTime">One-Time</SingleSelectOption>
-                  <SingleSelectOption value="subscription">Subscription</SingleSelectOption>
-                </SingleSelect>
+                  <Option value="oneTime">One-Time</Option>
+                  <Option value="subscription">Subscription</Option>
+                </Select>
               </GridItem>
               <GridItem col={6}>
                 <NumberInput
@@ -242,7 +242,7 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
               </GridItem>
               <GridItem col={6}>
                 {isSubscription ? (
-                  <SingleSelect
+                  <Select
                     id="select2"
                     label="Product Type"
                     required={isSubscription}
@@ -254,12 +254,12 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
                     onChange={value => handleChangeProductType(value)}
                     value={productType}
                   >
-                    <SingleSelectOption value="PHYSICAL">Physical goods</SingleSelectOption>
-                    <SingleSelectOption value="DIGITAL"> Digital goods</SingleSelectOption>
-                    <SingleSelectOption value="SERVICE">
+                    <Option value="PHYSICAL">Physical goods</Option>
+                    <Option value="DIGITAL"> Digital goods</Option>
+                    <Option value="SERVICE">
                       Service(Example:technical support,online courses)
-                    </SingleSelectOption>
-                  </SingleSelect>
+                    </Option>
+                  </Select>
                 ) : (
                   ''
                 )}
@@ -281,7 +281,7 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
               </GridItem>
               <GridItem col={6}>
                 {isSubscription ? (
-                  <SingleSelect
+                  <Select
                     id="select2"
                     label="Payment Interval"
                     required={isSubscription}
@@ -293,10 +293,10 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
                     onChange={value => handleChangePaymentInterval(value)}
                     value={paymentInterval}
                   >
-                    <SingleSelectOption value="MONTH">Month</SingleSelectOption>
-                    <SingleSelectOption value="YEAR">Year</SingleSelectOption>
-                    <SingleSelectOption value="WEEK">Week</SingleSelectOption>
-                  </SingleSelect>
+                    <Option value="MONTH">Month</Option>
+                    <Option value="YEAR">Year</Option>
+                    <Option value="WEEK">Week</Option>
+                  </Select>
                 ) : (
                   ''
                 )}
